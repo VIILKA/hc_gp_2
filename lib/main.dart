@@ -1,7 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:hc_gp_2/initial_page.dart';
+import 'package:hc_gp_2/onboarding_view/onboarding_page.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hc_gp_2/models/feeling.dart';
+import 'package:hc_gp_2/models/goal.dart';
+import 'package:hc_gp_2/models/note.dart';
+import 'package:hc_gp_2/models/training.dart';
 
-void main() {
-  runApp(const MainApp());
+void main() async {
+  final bindings = WidgetsFlutterBinding.ensureInitialized();
+  // Удаляем строку с FlutterNativeSplash
+  await Hive.initFlutter();
+
+  Hive.registerAdapter(TrainingAdapter());
+  Hive.registerAdapter(NoteAdapter());
+  Hive.registerAdapter(GoalAdapter());
+  Hive.registerAdapter(FeelingAdapter());
+
+  await Hive.openBox<Training>('trainings');
+  await Hive.openBox<Goal>('goals');
+  await Hive.openBox<Feeling>('feelings');
+  await Hive.openBox('settings');
+
+  runApp(
+    MainApp(),
+  );
 }
 
 class MainApp extends StatelessWidget {
@@ -10,11 +33,8 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
-    );
+        title: 'PeakProgress Win',
+        debugShowCheckedModeBanner: false,
+        home: InitialPage());
   }
 }
