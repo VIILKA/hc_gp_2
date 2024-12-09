@@ -1,7 +1,7 @@
 name: hc_gp_2
-description: "A new Flutter project."
+description: "Flutter application"
 publish_to: 'none'
-version: 0.1.0
+version: 1.0.1+2
 
 environment:
   sdk: ^3.5.4
@@ -43,15 +43,22 @@ dev_dependencies:
     sdk: flutter
   flutter_lints: ^4.0.0
   
-flutter_native_splash:
-  color: "#FFFFFF" 
-  image: assets/images/logo.png
+flutter_launcher_icons:
+      android: "launcher_icon"
+      ios: true
+      remove_alpha_ios: true
+      image_path: "assets/images/icon.png"
+      min_sdk_android: 24 # android min sdk min:16, default 21
+      adaptive_icon_background: "#4A4A4C" # You can use a color or image for the background
+      adaptive_icon_foreground: "assets/images/icon.png" # For adaptive icons on Android
 
-flutter_icons:
-  android: "launcher_icon"
-  ios: true
-  remove_alpha_ios: true
-  image_path: assets/images/logo.png
+flutter_native_splash:
+  color: "#4A4A4C"
+  image: assets/images/icon.png
+  android_12: 
+    image: assets/images/icon.png
+    color: "#4A4A4C"
+ 
 
 flutter:
   uses-material-design: true

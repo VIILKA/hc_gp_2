@@ -1,4 +1,4 @@
-package com.example.hc_gp_2
+package com.hcgp2.fito.goals
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,5 +1,6 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:hc_gp_2/onboarding_view/onboarding_page.dart';
 import 'package:hc_gp_2/service/%20flag_service.dart';
 import 'package:hc_gp_2/service/location_service.dart';
 import 'package:hc_gp_2/webview_page.dart';
@@ -25,39 +26,32 @@ class _InitialPageState extends State<InitialPage> {
   }
 
   Future<void> _initializeApp() async {
-    // Проверяем наличие интернет-соединения
     var connectivityResult = await Connectivity().checkConnectivity();
     bool hasInternet = connectivityResult != ConnectivityResult.none;
 
     if (!hasInternet) {
-      // Нет интернета - открываем приложение сразу
       _navigateToApp();
       return;
     }
 
     try {
-      // Инициализируем Flagsmith и грузим appConfig
       await _flagService.init();
 
       if (_flagService.showWebView) {
-        // Определяем страну пользователя
         String? countryCode = await _locationService.getCountryCode();
 
         if (countryCode != null &&
             _flagService.webViewConfig.containsKey(countryCode)) {
-          // Страна есть в списке для WebView
           _navigateToWebView(_flagService.webViewConfig[countryCode]!);
         } else {
-          // Либо страна не определена, либо её нет в списке
           _navigateToApp();
         }
       } else {
-        // showWebView = false
         _navigateToApp();
       }
     } catch (e) {
-      print('Ошибка при инициализации или определении местоположения: $e');
-      // При ошибке открываем приложение
+      print('Error locations: $e');
+
       _navigateToApp();
     }
   }
@@ -80,29 +74,16 @@ class _InitialPageState extends State<InitialPage> {
   @override
   Widget build(BuildContext context) {
     if (_isLoading) {
-      // Показать индикатор загрузки
       return const Scaffold(
         body: Center(child: CircularProgressIndicator()),
       );
     }
 
     if (_shouldShowWebView && _webViewUrl.isNotEmpty) {
-      // Показать WebView
       return WebviewPage(url: _webViewUrl);
     }
 
-    // Показать основное приложение
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Основное приложение'),
-      ),
-      body: const Center(
-        child: Text(
-          'Добро пожаловать!',
-          style: TextStyle(fontSize: 24),
-        ),
-      ),
-    );
+    return const OnboardingScreen();
   }
 
   @override

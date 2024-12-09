@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hc_gp_2/initial_page.dart';
-import 'package:hc_gp_2/onboarding_view/onboarding_page.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hc_gp_2/models/feeling.dart';
 import 'package:hc_gp_2/models/goal.dart';
@@ -8,8 +7,8 @@ import 'package:hc_gp_2/models/note.dart';
 import 'package:hc_gp_2/models/training.dart';
 
 void main() async {
-  final bindings = WidgetsFlutterBinding.ensureInitialized();
-  // Удаляем строку с FlutterNativeSplash
+  WidgetsFlutterBinding.ensureInitialized();
+
   await Hive.initFlutter();
 
   Hive.registerAdapter(TrainingAdapter());
@@ -23,7 +22,7 @@ void main() async {
   await Hive.openBox('settings');
 
   runApp(
-    MainApp(),
+    const MainApp(),
   );
 }
 

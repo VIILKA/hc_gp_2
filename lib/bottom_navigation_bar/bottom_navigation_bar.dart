@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gaimon/gaimon.dart';
 import 'package:hc_gp_2/home_view/add_training_bottom_sheet.dart';
 import 'package:hc_gp_2/home_view/home_page.dart';
+import 'package:hc_gp_2/settings_view/settings_page.dart';
 import 'package:hc_gp_2/statistic_view/statistic_page.dart';
 import 'package:hc_gp_2/styles/app_theme.dart';
 
@@ -20,8 +21,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
   late final List<Widget> _pages = [
     HomePage(key: homePageKey),
     const StatisticPage(),
-    const HomePage(),
-    const HomePage(),
+    const SettingsPage(),
   ];
 
   // Колбек для отображения BottomSheet
